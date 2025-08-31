@@ -141,7 +141,7 @@ const CompareView = () => {
                   <div className="-mx-6 px-6">
                     <div className="grid grid-cols-1 gap-4 md:flex md:space-x-4 md:overflow-x-auto md:pb-4">
                       {filteredRecords.map(record => (
-                        <div key={record.id} className="rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-900/50 md:flex-1 md:min-w-[18rem]">
+                        <div key={record.id} className="rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-900/50 md:flex-1 md:min-w-[14rem]">
                           <h5 className="truncate font-semibold text-gray-900 dark:text-white" title={record.scenario_name || 'Untitled'}>{record.scenario_name || 'Untitled Scenario'}</h5>
                           <div className="mt-4 space-y-3">
                             <div>

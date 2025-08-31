@@ -68,7 +68,7 @@ const RunCharts = ({ records }: RunChartsProps) => {
                 <ResponsiveContainer width="100%" height={300}>
                     <BarChart data={chartData} margin={{ top: 5, right: 20, left: 10, bottom: 5 }}>
                         <CartesianGrid strokeDasharray="3 3" stroke="rgba(128, 128, 128, 0.3)" />
-                        <XAxis dataKey="model" tick={{ fill: 'currentColor', fontSize: 12 }} />
+                        <XAxis dataKey="model" tick={{ fill: 'currentColor', fontSize: 11 }} angle={-30} textAnchor="end" height={50} interval={0} />
                         <YAxis tick={{ fill: 'currentColor', fontSize: 12 }} unit="ms" />
                         <Tooltip cursor={{ fill: 'rgba(128, 128, 128, 0.1)' }} contentStyle={tooltipStyle} itemStyle={itemStyle} labelStyle={labelStyle} />
                         <Bar dataKey="Latency (ms)">
@@ -82,7 +82,7 @@ const RunCharts = ({ records }: RunChartsProps) => {
                 <ResponsiveContainer width="100%" height={300}>
                     <BarChart data={chartData} margin={{ top: 5, right: 20, left: 10, bottom: 5 }}>
                         <CartesianGrid strokeDasharray="3 3" stroke="rgba(128, 128, 128, 0.3)" />
-                        <XAxis dataKey="model" tick={{ fill: 'currentColor', fontSize: 12 }} />
+                        <XAxis dataKey="model" tick={{ fill: 'currentColor', fontSize: 11 }} angle={-30} textAnchor="end" height={50} interval={0} />
                         <YAxis tick={{ fill: 'currentColor', fontSize: 12 }} />
                         <Tooltip cursor={{ fill: 'rgba(128, 128, 128, 0.1)' }} contentStyle={tooltipStyle} itemStyle={itemStyle} labelStyle={labelStyle} />
                         <Legend wrapperStyle={{ fontSize: '14px' }} />
