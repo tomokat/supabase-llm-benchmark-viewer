@@ -5,22 +5,19 @@ import CompareView from './CompareView';
 
 function App() {
   const [currentView, setCurrentView] = useState('dashboard');
+  const [dateRange, setDateRange] = useState({ from: '', to: '' });
+
+  const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setDateRange(prev => ({ ...prev, [e.target.name]: e.target.value }));
+  };
 
   return (
-    <Layout currentView={currentView} onNavigate={setCurrentView}>
+    <Layout currentView={currentView} onNavigate={setCurrentView} dateRange={dateRange} onDateChange={handleDateChange}>
       {currentView === 'dashboard' && (
-        <>
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">LLM Usage Benchmarks</h1>
-            <p className="mt-2 text-lg text-gray-600 dark:text-gray-400">
-              Displaying results from the <code>llm_usage_benchmark</code> table in Supabase.
-            </p>
-          </div>
-          <TableView />
-        </>
+        <TableView dateRange={dateRange} />
       )}
       {currentView === 'compare' && (
-        <CompareView />
+        <CompareView dateRange={dateRange} />
       )}
     </Layout>
   );

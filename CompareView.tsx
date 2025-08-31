@@ -14,7 +14,11 @@ type RunGroup = {
   records: LlmUsageBenchmark[];
 };
 
-const CompareView = () => {
+interface CompareViewProps {
+  dateRange: { from: string; to: string };
+}
+
+const CompareView = ({ dateRange }: CompareViewProps) => {
   const [runGroups, setRunGroups] = useState<RunGroup[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -24,11 +28,23 @@ const CompareView = () => {
     const fetchAndGroupBenchmarks = async () => {
       try {
         setLoading(true);
-        const { data, error } = await supabase
+        let query = supabase
           .from('llm_usage_benchmark')
           .select('*')
           .not('run_id', 'is', null) // Only fetch rows that are part of a run
           .order('created_at', { ascending: false });
+
+        if (dateRange.from) {
+          query = query.gte('created_at', new Date(dateRange.from).toISOString());
+        }
+        if (dateRange.to) {
+          // To make the 'to' date inclusive, set the time to the end of the day.
+          const toDate = new Date(dateRange.to);
+          toDate.setHours(23, 59, 59, 999);
+          query = query.lte('created_at', toDate.toISOString());
+        }
+
+        const { data, error } = await query;
 
         if (error) throw error;
 
@@ -74,7 +90,7 @@ const CompareView = () => {
     };
 
     fetchAndGroupBenchmarks();
-  }, []);
+  }, [dateRange]);
 
   const handleModelSelectionChange = (runId: string, modelToToggle: string) => {
     setSelectedModels(prev => {
@@ -94,6 +110,11 @@ const CompareView = () => {
         <p className="mt-2 text-lg text-gray-600 dark:text-gray-400">
           Grouped results by <code>run_id</code> to compare performance across different scenarios.
         </p>
+        {!loading && !error && (
+          <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+            Showing {runGroups.length} run{runGroups.length !== 1 ? 's' : ''}.
+          </p>
+        )}
       </div>
 
       {loading && <div className="text-center p-8 text-gray-500 dark:text-gray-400">Loading comparison data...</div>}

@@ -4,7 +4,11 @@ import { LlmUsageBenchmark } from './database.types';
 import ExpandableRow from './ExpandableRow';
 import FormattedResponse from './FormattedResponse';
 
-const TableView = () => {
+interface TableViewProps {
+  dateRange: { from: string; to: string };
+}
+
+const TableView = ({ dateRange }: TableViewProps) => {
   const [benchmarks, setBenchmarks] = useState<LlmUsageBenchmark[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -13,10 +17,22 @@ const TableView = () => {
     const fetchBenchmarks = async () => {
       try {
         setLoading(true);
-        const { data, error } = await supabase
+        let query = supabase
           .from('llm_usage_benchmark')
           .select('*')
           .order('created_at', { ascending: false });
+
+        if (dateRange.from) {
+          query = query.gte('created_at', new Date(dateRange.from).toISOString());
+        }
+        if (dateRange.to) {
+          // To make the 'to' date inclusive, set the time to the end of the day.
+          const toDate = new Date(dateRange.to);
+          toDate.setHours(23, 59, 59, 999);
+          query = query.lte('created_at', toDate.toISOString());
+        }
+
+        const { data, error } = await query;
 
         if (error) throw error;
         setBenchmarks(data || []);
@@ -29,13 +45,26 @@ const TableView = () => {
     };
 
     fetchBenchmarks();
-  }, []);
+  }, [dateRange]);
 
   if (loading) return <div className="text-center p-8 text-gray-500 dark:text-gray-400">Loading data...</div>;
   if (error) return <div className="text-center p-8 text-red-500">Error: {error}</div>;
 
   return (
-    <div className="overflow-x-auto rounded-lg border border-gray-200 dark:border-gray-700">
+    <>
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">LLM Usage Benchmarks</h1>
+        <p className="mt-2 text-lg text-gray-600 dark:text-gray-400">
+          Displaying results from the <code>llm_usage_benchmark</code> table in Supabase.
+        </p>
+        {!loading && !error && (
+          <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+            Showing {benchmarks.length} record{benchmarks.length !== 1 ? 's' : ''}.
+          </p>
+        )}
+      </div>
+
+      <div className="overflow-x-auto rounded-lg border border-gray-200 dark:border-gray-700">
       <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm dark:divide-gray-700 dark:bg-gray-800">
         <thead className="bg-gray-100 dark:bg-gray-700">
           <tr>
@@ -66,6 +95,7 @@ const TableView = () => {
         <p className="text-center p-8 text-gray-500 dark:text-gray-400">No data found in 'llm_usage_benchmark' table.</p>
       )}
     </div>
+    </>
   );
 };
 
