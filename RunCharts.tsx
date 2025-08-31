@@ -53,6 +53,14 @@ const RunCharts = ({ records }: RunChartsProps) => {
         borderRadius: '0.5rem'
     };
 
+    const itemStyle = {
+        color: '#fff' // Ensure item text is white for readability
+    };
+
+    const labelStyle = {
+        color: '#d1d5db' // text-gray-300 for the label (model name)
+    };
+
     return (
         <div className="mt-6 grid grid-cols-1 gap-8 lg:grid-cols-2">
             <div>
@@ -62,7 +70,7 @@ const RunCharts = ({ records }: RunChartsProps) => {
                         <CartesianGrid strokeDasharray="3 3" stroke="rgba(128, 128, 128, 0.3)" />
                         <XAxis dataKey="model" tick={{ fill: 'currentColor', fontSize: 12 }} />
                         <YAxis tick={{ fill: 'currentColor', fontSize: 12 }} unit="ms" />
-                        <Tooltip cursor={{ fill: 'rgba(128, 128, 128, 0.1)' }} contentStyle={tooltipStyle} />
+                        <Tooltip cursor={{ fill: 'rgba(128, 128, 128, 0.1)' }} contentStyle={tooltipStyle} itemStyle={itemStyle} labelStyle={labelStyle} />
                         <Bar dataKey="Latency (ms)">
                             {chartData.map((_entry, index) => <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />)}
                         </Bar>
@@ -76,7 +84,7 @@ const RunCharts = ({ records }: RunChartsProps) => {
                         <CartesianGrid strokeDasharray="3 3" stroke="rgba(128, 128, 128, 0.3)" />
                         <XAxis dataKey="model" tick={{ fill: 'currentColor', fontSize: 12 }} />
                         <YAxis tick={{ fill: 'currentColor', fontSize: 12 }} />
-                        <Tooltip cursor={{ fill: 'rgba(128, 128, 128, 0.1)' }} contentStyle={tooltipStyle} />
+                        <Tooltip cursor={{ fill: 'rgba(128, 128, 128, 0.1)' }} contentStyle={tooltipStyle} itemStyle={itemStyle} labelStyle={labelStyle} />
                         <Legend wrapperStyle={{ fontSize: '14px' }} />
                         <Bar dataKey="Prompt Tokens" stackId="a" fill="#8884d8" />
                         <Bar dataKey="Completion Tokens" stackId="a" fill="#82ca9d" />
