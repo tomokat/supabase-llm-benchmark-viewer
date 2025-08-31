@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { supabase } from './supabaseClient';
 import { LlmUsageBenchmark } from './database.types';
 import ExpandableRow from './ExpandableRow';
+import FormattedResponse from './FormattedResponse';
 
 const TableView = () => {
   const [benchmarks, setBenchmarks] = useState<LlmUsageBenchmark[]>([]);
@@ -54,7 +55,8 @@ const TableView = () => {
               <td className="whitespace-nowrap px-4 py-4 text-gray-700 dark:text-gray-200">{row.latency_ms?.toFixed(2) || 'N/A'}</td>
               <td className="whitespace-nowrap px-4 py-4 text-gray-700 dark:text-gray-200">
                 <ExpandableRow title="Input" data={row.input} />
-                <ExpandableRow title="Output" data={row.output} />
+                <ExpandableRow title="Raw Output" data={row.output} />
+                <FormattedResponse output={row.output} />
               </td>
             </tr>
           ))}
