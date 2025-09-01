@@ -1,12 +1,18 @@
 # LLM Usage Benchmark Viewer
 
+## Screenshot
+
+![Application Screenshot](./assets/app-screenshot.png)
+
+---
+
 This is a starter project built with React, Vite, TypeScript, and Tailwind CSS that connects to a Supabase database to display and analyze LLM usage benchmarks. It provides a clean, responsive interface for viewing raw data and comparing performance across different models and scenarios.
 
 ## Key Features
 
 *   **Modern Tech Stack**: React, Vite, TypeScript, and Tailwind CSS.
 *   **Supabase Integration**: Securely connects to a Supabase project to fetch data using the official SDK.
-*   **Dashboard View**: A paginated table displaying all benchmark records from the `llm_usage_benchmark` table.
+*   **Dashboard View**: A table displaying all benchmark records from the `llm_usage_benchmark` table.
 *   **Comparison View**: A powerful interface to group benchmark runs by `run_id`, allowing for side-by-side comparison of different models.
     *   **Dynamic Charts**: Visualizes latency and token usage per model for each run.
     *   **Model Filtering**: Interactively select which models to include in the comparison.
