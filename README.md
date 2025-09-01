@@ -24,7 +24,7 @@ This is a starter project built with React, Vite, TypeScript, and Tailwind CSS t
 
 ## Database Schema
 
-The application is designed to work with the following table schema in your Supabase project:
+The application is designed to work with the following table schema in your Supabase project, which is generated from the another CLI tool that I made [supabase-llm-usage-benchmark](https://github.com/tomokat/supabase-llm-usage-benchmark)
 
 ```sql
 create table llm_usage_benchmark (
