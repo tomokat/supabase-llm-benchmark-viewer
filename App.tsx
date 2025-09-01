@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Layout from './Layout';
 import TableView from './TableView';
 import CompareView from './CompareView';
+import SettingsView from './SettingsView';
 
 function App() {
   const [currentView, setCurrentView] = useState('dashboard');
@@ -18,6 +19,9 @@ function App() {
       )}
       {currentView === 'compare' && (
         <CompareView dateRange={dateRange} />
+      )}
+      {currentView === 'settings' && (
+        <SettingsView />
       )}
     </Layout>
   );

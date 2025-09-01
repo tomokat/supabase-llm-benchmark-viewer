@@ -54,7 +54,11 @@ const Sidenav = ({ isOpen, onClose, currentView, onNavigate }: SidenavProps) => 
                 </a>
               </li>
               <li className="mt-1">
-                <a href="#" onClick={(e) => e.preventDefault()} className={`${navItemClasses} ${inactiveClasses}`}>
+                <a
+                  href="#"
+                  onClick={(e) => { e.preventDefault(); handleNavClick('settings'); }}
+                  className={`${navItemClasses} ${currentView === 'settings' ? activeClasses : inactiveClasses}`}
+                >
                   Settings
                 </a>
               </li>
